@@ -13,7 +13,7 @@ def validate_file(file):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Convert image to C header file in RGB565 format.')
+    parser = argparse.ArgumentParser(description='Convert image to C array file in RGB565 format.')
     try:
         parser.add_argument('--input', dest='input', required=True, type=validate_file, help='Input image',
                             metavar="FILE")
