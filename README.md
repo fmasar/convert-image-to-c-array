@@ -15,12 +15,37 @@ typedef struct {
 typedef struct {
       const uint16_t width;
       const uint16_t height;
+      const uint16_t* data;
+      const uint8_t* comp;
+} AimiImageDataRLE;
+
+typedef struct {
+      const uint16_t width;
+      const uint16_t height;
       const uint8_t  type;
       const uint8_t* data;
 } AimiMaskData;
 
 typedef struct {
+      const uint16_t width;
+      const uint16_t height;
+      const uint8_t  type;
+      const uint8_t* data;
+      const uint8_t* comp;
+} AimiMaskDataRLE;
+
+typedef struct {
       const AimiImageData* image;
       const AimiMaskData* mask;
-} AimiImageMaskData;
+} AimiImageMask;
+
+typedef struct {
+      const AimiImageDataRLE* image_rle;
+      const AimiMaskData* mask;
+} AimiImageRLEMask;
+
+typedef struct {
+      const AimiImageDataRLE* image_rle;
+      const AimiMaskDataRLE* mask_rle;
+} AimiImageMaskRLE;
 ```
