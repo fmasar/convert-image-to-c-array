@@ -1,16 +1,30 @@
 from enum import Enum
 
 
+class ConvTypes(Enum):
+    BOTH = "BOTH"
+    IMAGE = "IMAGE"
+    MASK = "MASK"
+
+    def __str__(self):
+        return self.value
+
+
 class AlphaTypes(Enum):
-    ALPHA_NONE = 0
-    ALPHA_8BITS = 1
-    ALPHA_4BITS = 2
-    ALPHA_2BITS = 3
-    ALPHA_1BIT = 4
+    BITS_8 = "BITS_8"
+    BITS_4 = "BITS_4"
+    BITS_2 = "BITS_2"
+    BITS_1 = "BITS_1"
+
+    def __str__(self):
+        return self.value
 
 
 class RLETypes(Enum):
-    RLE_OFF = 0
-    RLE_IMAGE = 1
-    RLE_MASK = 2
-    RLE_BOTH = 3
+    OFF = "OFF"
+    IMAGE = "IMAGE"
+    MASK = "MASK"
+    BOTH = "BOTH"
+
+    def __str__(self):
+        return self.value
