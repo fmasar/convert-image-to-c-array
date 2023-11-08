@@ -146,7 +146,7 @@ class GenTempl:
         output += self._mask_data
         output += f"}};  // {self._final_name}_mask_data\n"
         output += "\n"
-        output += f"const AimiMaskData {self._final_name}{self._mask_name_suffix}={{{self._width}, {self._height}, {self._mask_type}, {self._final_name}_mask_data}};\n"
+        output += f"const AimiMaskData {self._final_name}{self._mask_name_suffix}={{{self._width}, {self._height}, {self._get_mask_type(self._mask_type)}, {self._final_name}_mask_data}};\n"
         return output
 
     def _fill_template_c_mask_rle(self) -> str:
@@ -159,10 +159,23 @@ class GenTempl:
         output += self._mask_comp
         output += f"}};  // {self._final_name}_mask_comp\n"
         output += "\n"
-        output += f"const AimiMaskDataRLE {self._final_name}{self._mask_name_suffix}={{{self._width}, {self._height}, {self._mask_type}, {self._final_name}_mask_data, {self._final_name}_mask_comp}};\n"
+        output += f"const AimiMaskDataRLE {self._final_name}{self._mask_name_suffix}={{{self._width}, {self._height}, {self._get_mask_type(self._mask_type)}, {self._final_name}_mask_data, {self._final_name}_mask_comp}};\n"
         return output
 
     def _fill_template_c_image_mask_wrapper(self) -> str:
         output = "\n"
         output += f"const {self._final_data_type} {self._final_name}={{&{self._final_name}{self._image_name_suffix}, &{self._final_name}{self._mask_name_suffix}}};\n"
         return output
+
+    def _get_mask_type(self, alpha_type: AlphaTypes) -> str:
+        prefix = "aimi_mask_type_bits"
+        if alpha_type == AlphaTypes.BITS_8:
+            return prefix + "8"
+        elif alpha_type == AlphaTypes.BITS_4:
+            return prefix + "4"
+        elif alpha_type == AlphaTypes.BITS_2:
+            return prefix + "2"
+        elif alpha_type == AlphaTypes.BITS_1:
+            return prefix + "1"
+        else:
+            assert False, "Not implemented"
