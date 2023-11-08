@@ -66,7 +66,7 @@ if __name__ == '__main__':
         conv_type = ConvTypes.IMAGE
 
     if args.alpha is None:
-        alpha_type = AlphaTypes.ALPHA_NONE
+        alpha_type = AlphaTypes.BITS_8
 
     if args.rle is None:
         rle_type = RLETypes.OFF
