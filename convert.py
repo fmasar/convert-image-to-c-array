@@ -80,7 +80,8 @@ def gen_image_data_rle(im: Image, pix) -> (str, str, int):
             rgb565_int = (rgb565_int << 8 | ((rgb565_int >> 8) & 255)) & 65535
             if rgb565_int == rgb565_int_before:
                 comp_counter += 1
-            else:
+
+            if (rgb565_int != rgb565_int_before) or (comp_counter == 255):
                 if rgb565_int_before != -1:
                     output_data += "0x{:04x}".format(rgb565_int_before)
                     output_comp += "0x{:02x}".format(comp_counter)
