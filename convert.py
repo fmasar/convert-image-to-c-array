@@ -81,7 +81,9 @@ def gen_image_data_rle(im: Image, pix) -> (str, str, int):
             if rgb565_int == rgb565_int_before:
                 comp_counter += 1
 
-            if (rgb565_int != rgb565_int_before) or (comp_counter == 255):
+            if (rgb565_int != rgb565_int_before) or (comp_counter == 256):
+                if comp_counter == 256:
+                    comp_counter -= 1
                 if rgb565_int_before != -1:
                     output_data += "0x{:04x}".format(rgb565_int_before)
                     output_comp += "0x{:02x}".format(comp_counter)
@@ -169,7 +171,9 @@ def gen_mask_data_rle(alpha_type: AlphaTypes, im: Image, pix) -> (str, str, int)
                 if mask_cache == mask_before:
                     comp_counter += 1
                 else:
-                    if mask_before != -1:
+                    if (mask_before != -1) or (comp_counter == 256):
+                        if comp_counter == 256:
+                            comp_counter -= 1
                         output_data += "0x{:02x}".format(mask_before)
                         output_comp += "0x{:02x}".format(comp_counter)
                         mask_before = mask_cache
