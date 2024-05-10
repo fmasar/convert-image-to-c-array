@@ -7,7 +7,8 @@ from utils import rgb888_to_rgb565
 BYTES_PRE_LINE = 20
 
 
-def convert(image_path: str, output_name: str, output_path: str, conv_type: ConvTypes, alpha_type: AlphaTypes, rle_type: RLETypes) -> None:
+def convert(image_path: str, output_name: str, conv_type: ConvTypes,
+            alpha_type: AlphaTypes, rle_type: RLETypes) -> (str, str):
     image_data = None
     image_data_len = None
     image_comp = None
@@ -18,8 +19,6 @@ def convert(image_path: str, output_name: str, output_path: str, conv_type: Conv
 
     im = Image.open(image_path)
     pix = im.load()
-    f_h = open(output_path + output_name + ".h", "w")
-    f_c = open(output_path + output_name + ".cpp", "w")
     get_templ = GenTempl(output_name, im.width, im.height)
 
     if conv_type in [ConvTypes.IMAGE, ConvTypes.BOTH]:
@@ -45,7 +44,16 @@ def convert(image_path: str, output_name: str, output_path: str, conv_type: Conv
             mask_data_len = ((im.width * im.height) + (div_by - 1)) // div_by
 
     get_templ.set_mask(mask_data, mask_data_len, alpha_type, mask_comp)
-    output_h, output_c = get_templ.get_templ()
+    return get_templ.get_templ()
+
+
+def convert_and_save(image_path: str, output_name: str, output_path: str,
+                     conv_type: ConvTypes, alpha_type: AlphaTypes,
+                     rle_type: RLETypes) -> None:
+    output_h, output_c = convert(image_path, output_name, conv_type, alpha_type, rle_type)
+
+    f_h = open(output_path + output_name + ".h", "w")
+    f_c = open(output_path + output_name + ".cpp", "w")
     f_h.write(output_h)
     f_c.write(output_c)
 

@@ -3,7 +3,7 @@
 import argparse
 import os
 
-from convert import convert
+from convert import convert_and_save
 from enums import ConvTypes, AlphaTypes, RLETypes
 
 
@@ -87,4 +87,4 @@ if __name__ == '__main__':
     print(f"Alpha type: \t{args.alpha}")
     print(f"RLE type: \t{args.rle}")
 
-    convert(args.input, args.output, output_path, args.conv, args.alpha, args.rle)
+    convert_and_save(args.input, args.output, output_path, args.conv, args.alpha, args.rle)
