@@ -149,7 +149,7 @@ def gen_mask_data(alpha_type: AlphaTypes, im: Image, pix) -> str:
             output += "\n"
 
     if mask_cache_counter != 0:
-        mask_cache = (mask_cache << parts_in_byte)
+        mask_cache = (mask_cache << (parts_in_byte - mask_cache_counter))
         output += "0x{:02x}".format(mask_cache)
         output += "\n"
 
@@ -209,7 +209,7 @@ def gen_mask_data_rle(alpha_type: AlphaTypes, im: Image, pix) -> (str, str, int)
         if bytes_counter % BYTES_PRE_LINE == 0:
             output_data += "\n"
             output_comp += "\n"
-        mask_cache = (mask_cache << (8 - (number_of_bits * mask_cache_counter)))
+        mask_cache = (mask_cache << (parts_in_byte - mask_cache_counter))
         output_data += ",0x{:02x}".format(mask_cache)
         output_comp += ",0x{:02x}".format(0)
         bytes_counter += 1
